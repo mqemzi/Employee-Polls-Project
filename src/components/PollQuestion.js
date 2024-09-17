@@ -49,21 +49,25 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
+    const selectedOption = e.target.name;
+
     dispatch(
       handleAnswer({
         authedUser,
         qid: questionId,
-        answer: e.target.name,
+        answer: selectedOption,
       })
     );
     dispatch(
       handleSaveQuestionAnswer({
         authedUser,
         qid: questionId,
-        answer: e.target.name,
+        answer: selectedOption,
       })
     );
-    navigate("/");
+    
+    // Update the state to reflect that the user has answered
+    setAnswered(true);
   };
 
   const handleBack = () => {
@@ -125,10 +129,10 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
                   )}
                   <p className="poll-question">{question?.optionTwo.text}</p>
                   <ProgressBar
-                    now={percentageOptionOne}
+                    now={percentageOptionTwo}
                     label={`${percentageOptionTwo}%`}
                   />
-                  <p>People who voted:{optionTwoVotes}</p>
+                  <p>People who voted: {optionTwoVotes}</p>
                 </div>
                 <Button onClick={handleBack}>Go Back to Home</Button>
               </div>
